@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Garden Care</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+</head>
+<body>
+
+<!-- Side Navigation -->
+<nav class="w3-sidebar w3-bar-block w3-card w3-animate-left w3-center" style="display:none" id="mySidebar">
+  <h1 class="w3-xxxlarge w3-text-theme">Side Navigation</h1>
+  <button class="w3-bar-item w3-button" onclick="w3_close()">Close <i class="fa fa-remove"></i></button>
+  <a href="#" class="w3-bar-item w3-button">Link 1</a>
+  <a href="#" class="w3-bar-item w3-button">Link 2</a>
+  <a href="#" class="w3-bar-item w3-button">Link 3</a>
+  <a href="#" class="w3-bar-item w3-button">Link 4</a>
+</nav>
+
+<!-- Header -->
+<header class="w3-container w3-theme w3-padding" id="myHeader">
+  <i onclick="w3_open()" class="fa fa-bars w3-xlarge w3-button w3-theme"></i> 
+  <div class="w3-center">
+  <h4>SYSC 3010 Development Project (By: NICOLAS, CHRISTOPHER, ISMAEL)</h4>
+  <h1 class="w3-xxxlarge w3-animate-bottom">GARDEN CARE</h1>
+
+  <h1>Current User ID</h1>
+  <p id="currID"></p>
+
+  
+  <div class="w3-center">
+    <h2>Plant Registration</h2>
+    <form action="/regP" method="post">
+        <div class="input-box">
+            <input type="text" placeholder="UserID" required name="userID">
+          </div>
+        <div class="input-box">
+        <input type="text" placeholder="Enter Plant Slot Number (1-4)" required name="plantNum">
+      </div>
+      <div class="input-box">
+        <input type="text" placeholder="Enter Plant Name" required name="plantName">
+      </div>
+      <div class="input-box">
+        <input type="text" placeholder="Enter Moisture Threshold (between 350-430)" required name="MT">
+      </div>
+      <div class="policy">
+        
+      </div>
+      <div class="input-box button">
+        <input type="Submit" onclick="registerPlant()" value="Register Plant">
+      </div>     
+     
+    </form>
+  </div>
+</header>
+
+<!-- Modal -->
+<div id="id01" class="w3-modal">
+    <div class="w3-modal-content w3-card-4 w3-animate-top">
+      <header class="w3-container w3-theme-l1"> 
+        <span onclick="document.getElementById('id01').style.display='none'"></span>
+      
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="img_avatar2.png" alt="Avatar" class="avatar">
+      <div class="w3-center">
+        <form action="/login" method="post"></form>
+        <label for="uname"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" name="uname" required>
+      <label>
+          </label>
+  
+    
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="psw" required>
+          
+        <button type="submit" id="submit" onclick="getLogin()">Login</button>
+        <label>
+          <input type="checkbox" checked="checked" name="remember"> Remember me
+        </label>
+      </div>
+  
+      <div class="container" style="background-color:#f90000">
+        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+        <span class="psw">Forgot <a href="#">password?</a></span>
+      </div>
+    </form>
+      </div>
+  </div>
+    </div>
+  
+    <form action="/login" method="post">
+    <div class="w3-center">
+      <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="uname" required>
+		<label>
+        </label>
+
+	
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required>
+        
+      <button type="submit" onclick="getLogin()">Login</button>
+      <label>
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+    </div>
+
+    <div class="container" style="background-color:#1e7222">
+      <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+      <span class="psw">Forgot <a href="#">password?</a></span>
+    </div>
+  </form>
+    </div>
+</div>
+</form>
+
+<div class="w3-row-padding w3-center w3-margin-top">
+<div class="w3-third">
+  <div class="w3-card w3-container" style="min-height:460px">
+  <h3>User Info</h3><br>
+  <i class="fa fa-desktop w3-margin-bottom w3-text-theme" style="font-size:120px"></i>
+  <p>Name</p>
+  {{ name }}
+  <p>Username</p>
+  {{ username }}
+  <p>UserID</p>
+  <p id="userID">{{ userID }}</p>
+  </div>
+</div>
+
+<div class="w3-third">
+  <div class="w3-card w3-container" style="min-height:460px">
+  <h3>Plant Information</h3><br>
+  <p>Current Temperature (°C)</p>
+  <p id="temp"></p>
+  <p>Current Humidity (g*m³)</p>
+  <p id="humi"></p>
+  <p>Current Moisture</p>
+  {{plantName1}}
+  <p id="moist1"></p>
+  {{plantName2}}
+  <p id="moist2"></p>
+  {{plantName3}}
+  <p id="moist3"></p>
+  {{plantName4}}
+  <p id="moist4"></p>
+  <p></p>
+  </div>
+</div>
+
+<form action="/viewPlants" method="post">
+<div class="w3-third">
+  <div class="w3-card w3-container" style="min-height:460px">
+  <h3>Plant Viewer</h3><br>
+  <i class="fa fa-diamond w3-margin-bottom w3-text-theme" style="font-size:120px"></i>
+  <p></p>
+  <input type="button" value="View Plant Webpage"
+        onclick="window.open('http://127.0.0.1:8000/index.html')">
+  <button onclick="viewPlants()">View Plants</button>
+  <p>Make sure to use "View Plant Webpage" before "View Plants"</p>
+  
+  <button onclick="armMotionDetection()">Arm Motion Detection</button>
+  <p></p>
+  </div>
+  </form>
+</div>
+</div>
+
+
+<!-- Footer -->
+<footer class="w3-container w3-theme-dark w3-padding-16">
+  <h3>Footer</h3>
+  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+  <div style="position:relative;bottom:55px;" class="w3-tooltip w3-right">
+    <span class="w3-text w3-theme-light w3-padding">Go To Top</span>    
+    <a class="w3-text-white" href="#myHeader"><span class="w3-xlarge">
+    <i class="fa fa-chevron-circle-up"></i></span></a>
+  </div>
+  <p>Remember to check out our  <a href="w3css_references.asp" class="w3-btn w3-theme-light" target="_blank">W3.CSS Reference</a></p>
+</footer>
+
+<!-- Script for Sidebar, Tabs, Accordions, Progress bars and slideshows -->
+
+<script type="module">
+ 
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+import { getDatabase, ref, get, onValue } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+// TODO: Add SDKs for Firebase products that you want to use
+
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyD8uOQuCPAPX-IJkhnpop317MW02WXaMMs",
+  authDomain: "gardencare-bff9e.firebaseapp.com",
+  databaseURL: "https://gardencare-bff9e-default-rtdb.firebaseio.com",
+  projectId: "gardencare-bff9e",
+  storageBucket: "gardencare-bff9e.appspot.com",
+  messagingSenderId: "745509722354",
+  appId: "1:745509722354:web:73ace53e738116059e586b"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app)
+
+// Getting the 9th element since it will always be the last one stored
+//getting temperature and humidity from plant 1 since currently values are the same for all 4
+
+var userID = document.getElementById("userID").textContent
+
+var temp_ref = ref(database, 'PlantTable/' + String(userID) + '/1/Temperature/9')
+var humi_ref = ref(database, 'PlantTable/' + String(userID) + '/1/Humidity/9')
+var moist1_ref = ref(database, 'PlantTable/' + String(userID) + '/1/Moisture/9')
+var moist2_ref = ref(database, 'PlantTable/' + String(userID) + '/2/Moisture/9')
+var moist3_ref = ref(database, 'PlantTable/' + String(userID) + '/3/Moisture/9')
+var moist4_ref = ref(database, 'PlantTable/' + String(userID) + '/4/Moisture/9')
+
+onValue(temp_ref, (snapshot) => {
+    var temp = snapshot.val();
+    console.log("temperature: " + temp)
+    document.getElementById("temp").textContent = JSON.stringify(temp);
+
+});
+onValue(humi_ref, (snapshot) => {
+    var humi = snapshot.val();
+    console.log("Humidity: " + humi)
+    document.getElementById("humi").textContent = JSON.stringify(humi);
+
+});
+onValue(moist1_ref, (snapshot) => {
+    var moist1 = snapshot.val();
+    console.log("Moisture: " + moist1)
+    document.getElementById("moist1").textContent = JSON.stringify(moist1);
+
+});
+onValue(moist2_ref, (snapshot) => {
+    var moist2 = snapshot.val();
+    console.log("Moisture: " + moist2)
+    document.getElementById("moist2").textContent = JSON.stringify(moist2);
+
+});
+onValue(moist3_ref, (snapshot) => {
+    var moist3 = snapshot.val();
+    console.log("Moisture: " + moist3)
+    document.getElementById("moist3").textContent = JSON.stringify(moist3);
+
+});
+onValue(moist4_ref, (snapshot) => {
+    var moist4 = snapshot.val();
+    console.log("Moisture: " + moist4)
+    document.getElementById("moist4").textContent = JSON.stringify(moist4);
+
+});
+
+function request(){
+  fetch('/UI', {
+    method: "POST"
+  }).then((res)=>{
+    console.log(res);
+    // window.location.href="/";
+  });
+}
+
+// Side navigation
+function w3_open() {
+  var x = document.getElementById("mySidebar");
+  x.style.width = "100%";
+  x.style.fontSize = "40px";
+  x.style.paddingTop = "10%";
+  x.style.display = "block";
+}
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+}
+
+// Tabs
+function openCity(evt, cityName) {
+  var i;
+  var x = document.getElementsByClassName("city");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  var activebtn = document.getElementsByClassName("testbtn");
+  for (i = 0; i < x.length; i++) {
+    activebtn[i].className = activebtn[i].className.replace(" w3-dark-grey", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " w3-dark-grey";
+}
+
+// var mybtn = document.getElementsByClassName("testbtn")[0];
+// mybtn.click();
+
+// Accordions
+function myAccFunc(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+
+// Slideshows
+var slideIndex = 1;
+
+function plusDivs(n) {
+  slideIndex = slideIndex + n;
+  showDivs(slideIndex);
+}
+
+function showDivs(n) {
+  var x = document.getElementsByClassName("mySlides");
+  if (n > x.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = x.length} ;
+  for (var i = 0; i < x.length; i++) {
+    x[i].style.display = "none";  
+  }
+  x[slideIndex-1].style.display = "block";  
+}
+
+showDivs(1);
+
+// Progress Bars
+function move() {
+  var elem = document.getElementById("myBar");   
+  var width = 5;
+  var id = setInterval(frame, 10);
+  function frame() {
+    if (width == 100) {
+      clearInterval(id);
+    } else {
+      width++; 
+      elem.style.width = width + '%'; 
+      elem.innerHTML = width * 1  + '%';
+    }
+  }
+}
+</script>
+
+</body>
+</html>
+
